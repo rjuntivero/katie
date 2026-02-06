@@ -1,26 +1,704 @@
 @import "tailwindcss";
 
+* {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ========== KATIE'S SCRAPBOOK PALETTE ========== */
+  /* Core: Pink & Sage Green + Pop Art Accents */
+  --background: #faf6f2;       /* warm cream paper */
+  --foreground: #2d2d2d;       /* rich charcoal */
+  
+  /* Pink tones - primary */
+  --primary: #e8a4b8;          /* dusty rose pink */
+  --primary-dark: #c97d94;     /* deeper rose */
+  --primary-light: #fce4ec;    /* soft blush */
+  
+  /* Green tones - sage accent */
+  --accent: #8fac7a;           /* sage green */
+  --accent-dark: #6b8a5a;      /* deeper sage */
+  --accent-light: #d4e4c8;     /* soft mint */
+  
+  /* Pop art accent colors */
+  --pop-yellow: #ffd93d;       /* sunny yellow */
+  --pop-orange: #ff9f6b;       /* soft coral */
+  --pop-blue: #a8d8ea;         /* duck pond blue */
+  --pop-lavender: #c9b1ff;     /* ariana purple */
+  
+  /* Surface colors - vintage paper */
+  --surface: #f5efe8;          /* aged paper */
+  --surface-warm: #f8f0e3;     /* warm parchment */
+  --kraft: #c9b896;            /* kraft paper */
+  --border: #d4c4b0;           /* warm border */
+  --muted: #7a7265;            /* muted brown */
+  
+  /* Special whites */
+  --miffy-white: #fffef9;
+  --cream: #fdfcf8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-surface: var(--surface);
+  --color-kraft: var(--kraft);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-pop-yellow: var(--pop-yellow);
+  --color-pop-orange: var(--pop-orange);
+  --color-pop-blue: var(--pop-blue);
+  --color-pop-lavender: var(--pop-lavender);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-simple-nathalie: var(--font-simple-nathalie);
+  --font-sunday-charm: var(--font-sunday-charm);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
+
+/* Custom scrollbar - washi tape style */
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-left: 1px dashed var(--border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border: 2px solid var(--surface);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* ========== SCRAPBOOK TEXTURES ========== */
+
+/* Kraft paper texture */
+.paper-kraft {
+  background-color: var(--kraft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' type='fractalNoise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* Grid paper texture */
+.paper-grid {
+  background-color: var(--cream);
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Lined paper */
+.paper-lined {
+  background-color: var(--cream);
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    var(--pop-blue) 27px,
+    var(--pop-blue) 28px
+  );
+}
+
+/* Dotted paper */
+.paper-dotted {
+  background-color: var(--surface);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* ========== WASHI TAPE STYLES ========== */
+
+.washi-tape {
+  position: relative;
+  display: inline-block;
+  padding: 8px 24px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.washi-pink {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  transform: rotate(-2deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.washi-green {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  transform: rotate(1deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.washi-yellow {
+  background: var(--pop-yellow);
+  color: #8a6d00;
+  transform: rotate(-1deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.washi-striped {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--primary-light),
+    var(--primary-light) 4px,
+    var(--cream) 4px,
+    var(--cream) 8px
+  );
+  color: var(--primary-dark);
+}
+
+/* ========== POLAROID & PHOTO FRAMES ========== */
+
+.polaroid {
+  background: white;
+  padding: 12px 12px 40px 12px;
+  box-shadow: 
+    0 2px 8px rgba(0,0,0,0.12),
+    0 1px 2px rgba(0,0,0,0.08);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.polaroid-caption {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: 1rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Photo with corner tabs */
+.photo-corners {
+  position: relative;
+}
+.photo-corners::before,
+.photo-corners::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--kraft);
+}
+.photo-corners::before {
+  top: -4px;
+  left: -4px;
+  border-right: none;
+  border-bottom: none;
+}
+.photo-corners::after {
+  bottom: -4px;
+  right: -4px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ========== STICKER STYLES ========== */
+
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.sticker-pink {
+  background: var(--primary);
+  color: white;
+}
+
+.sticker-green {
+  background: var(--accent);
+  color: white;
+}
+
+.sticker-yellow {
+  background: var(--pop-yellow);
+  color: #5a4a00;
+}
+
+.sticker-heart {
+  background: var(--primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  clip-path: path('M20,35 L3,20 C-4,12 3,0 12,0 C17,0 20,4 20,8 C20,4 23,0 28,0 C37,0 44,12 37,20 Z');
+}
+
+/* Star sticker */
+.sticker-star {
+  background: var(--pop-yellow);
+  color: #5a4a00;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* ========== STAMP & POSTMARK STYLES ========== */
+
+.stamp {
+  display: inline-block;
+  padding: 12px 16px;
+  background: var(--cream);
+  border: 3px dashed var(--primary);
+  transform: rotate(-8deg);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.postmark {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  font-size: 0.625rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  transform: rotate(15deg);
+  opacity: 0.7;
+}
+
+/* ========== TORN PAPER EDGES ========== */
+
+.torn-top {
+  position: relative;
+}
+.torn-top::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: inherit;
+  clip-path: polygon(
+    0% 50%, 3% 40%, 6% 55%, 9% 45%, 12% 50%, 15% 40%, 18% 55%, 21% 45%, 
+    24% 50%, 27% 40%, 30% 55%, 33% 45%, 36% 50%, 39% 40%, 42% 55%, 45% 45%,
+    48% 50%, 51% 40%, 54% 55%, 57% 45%, 60% 50%, 63% 40%, 66% 55%, 69% 45%,
+    72% 50%, 75% 40%, 78% 55%, 81% 45%, 84% 50%, 87% 40%, 90% 55%, 93% 45%,
+    96% 50%, 100% 45%, 100% 100%, 0% 100%
+  );
+}
+
+.torn-bottom {
+  position: relative;
+}
+.torn-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: inherit;
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% 50%, 97% 60%, 94% 45%, 91% 55%, 88% 50%, 85% 60%,
+    82% 45%, 79% 55%, 76% 50%, 73% 60%, 70% 45%, 67% 55%, 64% 50%, 61% 60%,
+    58% 45%, 55% 55%, 52% 50%, 49% 60%, 46% 45%, 43% 55%, 40% 50%, 37% 60%,
+    34% 45%, 31% 55%, 28% 50%, 25% 60%, 22% 45%, 19% 55%, 16% 50%, 13% 60%,
+    10% 45%, 7% 55%, 4% 50%, 0% 55%
+  );
+}
+
+/* ========== FRAME STYLES ========== */
+
+/* Scrapbook frame with decorative corners */
+.frame-vintage {
+  position: relative;
+  border: 4px solid var(--kraft);
+  padding: 16px;
+  background: var(--cream);
+}
+.frame-vintage::before,
+.frame-vintage::after {
+  content: '✿';
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+.frame-vintage::before { top: -12px; left: -12px; }
+.frame-vintage::after { bottom: -12px; right: -12px; }
+
+/* Tape corners frame */
+.frame-taped {
+  position: relative;
+  background: white;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.frame-taped::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 20%;
+  width: 60px;
+  height: 20px;
+  background: var(--pop-yellow);
+  opacity: 0.8;
+  transform: rotate(-3deg);
+  z-index:100;
+}
+.frame-taped::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 20%;
+  width: 50px;
+  height: 20px;
+  background: var(--primary-light);
+  opacity: 0.8;
+  transform: rotate(2deg);
+}
+
+/* ========== DECORATIVE ELEMENTS ========== */
+
+/* Doodle underline */
+.doodle-underline {
+  position: relative;
+  display: inline-block;
+}
+.doodle-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23e8a4b8' stroke-width='2' fill='none'/%3E%3C/svg%3E") repeat-x;
+}
+
+/* Hand-drawn circle */
+.circle-doodle {
+  position: relative;
+}
+.circle-doodle::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 3px solid var(--primary);
+  border-radius: 50% 45% 55% 50%;
+  transform: rotate(-5deg);
+}
+
+/* Arrow doodle */
+.arrow-doodle {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: var(--accent);
+  transform: rotate(-15deg);
+  animation: bounce-arrow 1s ease-in-out infinite;
+}
+@keyframes bounce-arrow {
+  0%, 100% { transform: rotate(-15deg) translateY(0); }
+  50% { transform: rotate(-15deg) translateY(-5px); }
+}
+
+/* ========== SECTION STYLING ========== */
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+@media (min-width: 768px) {
+  .section {
+    padding: 6rem 2rem;
+  }
+}
+
+.content-container {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* ========== BUTTON STYLES (NO GRADIENTS) ========== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-sm { padding: 6px 12px; font-size: 0.875rem; }
+.btn-md { padding: 10px 20px; font-size: 1rem; }
+.btn-lg { padding: 14px 28px; font-size: 1.125rem; }
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: 2px solid var(--primary-dark);
+  box-shadow: 3px 3px 0 var(--primary-dark);
+}
+.btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--primary-dark);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--foreground);
+  border: 2px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border);
+}
+.btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--border);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: white;
+  border: 2px solid var(--accent-dark);
+  box-shadow: 3px 3px 0 var(--accent-dark);
+}
+.btn-accent:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--accent-dark);
+}
+
+/* ========== CARD STYLES ========== */
+
+.card {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px) rotate(1deg);
+  box-shadow: 8px 8px 0 var(--primary-light);
+}
+
+/* ========== TYPOGRAPHY ========== */
+
+.heading-display {
+  font-family: 'Georgia', serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+.heading-section {
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.text-handwritten {
+  font-family: 'Brush Script MT', 'Segoe Script', cursive;
+  /* Fluid size: smaller on phones, scales up on large screens */
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  line-height: 1.5;
+}
+
+/* Optional fluid body text utility for longer notes */
+.text-fluid {
+  font-size: clamp(0.95rem, 2.2vw, 1.125rem);
+  line-height: 1.7;
+}
+
+/* ========== CUSTOM FONT UTILITIES ========== */
+
+.font-simple-nathalie {
+  font-family: var(--font-simple-nathalie), cursive;
+}
+
+.font-sunday-charm {
+  font-family: var(--font-sunday-charm), cursive;
+}
+
+.text-romantic {
+  font-family: var(--font-simple-nathalie), cursive;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.3;
+  color: var(--primary-dark);
+}
+
+.text-charming {
+  font-family: var(--font-sunday-charm), cursive;
+  font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+  line-height: 1.4;
+  color: var(--accent-dark);
+}
+
+/* ========== MIFFY BUNNY ========== */
+
+.miffy-face {
+  background: var(--miffy-white);
+  border-radius: 50%;
+  position: relative;
+}
+
+/* ========== CUTE ANIMATED ELEMENTS ========== */
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Wobble animation */
+@keyframes wobble {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.animate-wobble {
+  animation: wobble 2s ease-in-out infinite;
+}
+
+/* Sparkle animation */
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.animate-sparkle {
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+/* ========== DECORATIVE DIVIDERS ========== */
+
+.divider-doodle {
+  height: 20px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20'%3E%3Cpath d='M0,10 Q50,0 100,10 T200,10' stroke='%23e8a4b8' stroke-width='2' fill='none' stroke-dasharray='5,5'/%3E%3C/svg%3E") repeat-x center;
+}
+
+.divider-hearts {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--primary);
+  letter-spacing: 1rem;
+}
+.divider-hearts::before {
+  content: '♡ ♡ ♡ ♡ ♡';
+}
+
+.divider-flowers {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.5rem;
+}
+.divider-flowers::before {
+  content: '✿ ❀ ✿ ❀ ✿';
+}
+
+/* ========== ENVELOPE STYLING ========== */
+
+.envelope-inner {
+  position: relative;
+  background: var(--surface-warm);
+  border: 2px dashed var(--border);
+  padding: 2rem;
+}
+
+/* ========== PARALLAX LAYER UTILITIES ========== */
+
+.parallax-layer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ========== DUCK POND STYLING (Katie loves ducks!) ========== */
+
+.duck-float {
+  animation: duck-bob 2s ease-in-out infinite;
+}
+@keyframes duck-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+/* ========== SOFT SERVE SWIRL ========== */
+
+.softserve-swirl {
+  background: linear-gradient(180deg, var(--primary-light) 0%, var(--cream) 100%);
+  border-radius: 50% 50% 0 0;
+}
+
+/* ========== NAV STYLES ========== */
+
+.nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  border: 2px solid var(--primary-dark);
+  box-shadow: 2px 2px 0 var(--primary-dark);
+  transition: all 0.2s ease;
+}
+.nav-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--primary-dark);
+}
+
+/* ========== ARIANA GRANDE SPARKLE (her fave artist!) ========== */
+
+.sparkle-text {
+  position: relative;
+}
+.sparkle-text::before,
+.sparkle-text::after {
+  content: '✧';
+  position: absolute;
+  color: var(--pop-yellow);
+  animation: sparkle 1s ease-in-out infinite;
+}
+.sparkle-text::before { top: -10px; left: -15px; }
+.sparkle-text::after { bottom: -10px; right: -15px; animation-delay: 0.5s; }
+
+
+
