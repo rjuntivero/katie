@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { useSounds } from '@/hooks/useSounds';
 
 // Each clue in the treasure hunt
 interface TreasureClue {
@@ -17,6 +18,8 @@ interface TreasureHuntProps {
 }
 
 export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
+  const { playClickSound, playCorrectSound, playWrongSound, playNextClueSound } = useSounds();
+
   // Track which clue Katie is on (0-indexed)
   const [currentClueIndex, setCurrentClueIndex] = useState(0);
   // Track if hunt is complete
@@ -96,6 +99,7 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
     
     if (isCorrect) {
       // Correct answer!
+      playCorrectSound();
       setShowCorrect(true);
       setShowWrong(false);
       
@@ -115,6 +119,7 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
         setUserGuess('');
         
         if (currentClueIndex < totalClues - 1) {
+          playNextClueSound();
           setCurrentClueIndex(prev => prev + 1);
         } else {
           // Hunt complete!
@@ -125,6 +130,7 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
       
     } else {
       // Wrong answer - shake animation
+      playWrongSound();
       setShowWrong(true);
       
       if (inputRef.current) {
@@ -244,6 +250,10 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
               onChange={(e) => setUserGuess(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Your answer..."
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck={false}
               className="w-full p-3 text-center text-lg mb-4 outline-none"
               style={{
                 background: 'white',
@@ -251,6 +261,10 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
                 color: 'var(--foreground)',
                 transition: 'border-color 0.3s',
                 boxShadow: '2px 2px 0 var(--border)',
+                fontSize: '16px',
+                touchAction: 'manipulation',
+                WebkitAppearance: 'none',
+                borderRadius: '0',
               }}
             />
             
@@ -263,9 +277,11 @@ export default function TreasureHunt({ onComplete }: TreasureHuntProps) {
             
             {/* Submit button */}
             <button
-              onClick={handleSubmitGuess}
+              onClick={() => { playClickSound(); handleSubmitGuess(); }}
+              onTouchEnd={(e) => { e.preventDefault(); playClickSound(); handleSubmitGuess(); }}
               className="btn btn-md btn-accent"
               disabled={!userGuess.trim()}
+              style={{ touchAction: 'manipulation' }}
             >
               Check Answer 🔍
             </button>

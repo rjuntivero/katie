@@ -334,7 +334,7 @@ export default function ValentineProposal({ onAccept }: ValentineProposalProps) 
       {/* Polaroid for animation - starts hidden, GSAP shows it */}
       <div 
         ref={polaroidRef}
-        className="relative mx-auto p-3 pb-14 max-w-[280px] hidden"
+        className="relative mx-auto p-3 pb-8 max-w-[280px] hidden"
         style={{
           background: 'white',
           boxShadow: '0 8px 30px rgba(0,0,0,0.2), 4px 4px 0 var(--kraft)',
@@ -347,9 +347,9 @@ export default function ValentineProposal({ onAccept }: ValentineProposalProps) 
         />
         
         {/* Text area - below photo in the white space */}
-        <div className="pt-3 text-center">
+        <div className="pt-4 text-center">
           <p 
-            className="font-simple-nathalie text-[5vw] md:text-[1.2rem]"
+            className="font-simple-nathalie text-[7vw] md:text-[1.2rem]"
             style={{ color: 'var(--muted)' }}
           >
             :{`))`} It&apos;s Me and You 💕

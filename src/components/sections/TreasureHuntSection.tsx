@@ -1,9 +1,37 @@
 "use client";
 
 import { Section, TreasureHunt } from '@/components';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSounds } from '@/hooks/useSounds';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function TreasureHuntSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const hasPlayedTransition = useRef(false);
+  const { playPaperSlideSound } = useSounds();
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 80%',
+      onEnter: () => {
+        if (!hasPlayedTransition.current) {
+          hasPlayedTransition.current = true;
+          playPaperSlideSound();
+        }
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, [playPaperSlideSound]);
   return (
     <Section 
       id="treasure-hunt" 
@@ -16,8 +44,9 @@ export default function TreasureHuntSection() {
         overflow: 'hidden'
       }}
     >
-      {/* Section header */}
-      <div className="text-center mb-6 relative z-10">
+      <div ref={sectionRef}>
+        {/* Section header */}
+        <div className="text-center mb-6 relative z-10">
         <div className="washi-striped inline-block mb-4 font-bold">🔮 NOW, I WAS GONNA ASK YOU SOMETHING...BUT BEFORE THAT</div>
       </div>
       
@@ -35,7 +64,7 @@ export default function TreasureHuntSection() {
       
       <p 
         className="text-center mb-8 max-w-md mx-auto relative z-10 font-simple-nathalie"
-        style={{ color: 'var(--muted)', fontSize: '1.4rem' }}
+        style={{ color: 'var(--muted)', fontSize: '1.7rem' }}
       >
         You gotta make sure I&apos;m the right one for you :o
         <br />
@@ -52,6 +81,7 @@ export default function TreasureHuntSection() {
         >
           <TreasureHunt />
         </div>
+      </div>
       </div>
     </Section>
   );

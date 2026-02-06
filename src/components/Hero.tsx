@@ -4,10 +4,13 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import Image from 'next/image';
+import { useSounds } from '@/hooks/useSounds';
 
 gsap.registerPlugin(ScrollToPlugin);
 
 export default function Hero() {
+  const { playScrollSound } = useSounds();
+
   useEffect(() => {
     const title = document.querySelector('.hero-title');
     const subtitle = document.querySelector('.hero-subtitle');
@@ -74,6 +77,7 @@ export default function Hero() {
   }, []);
 
   const scrollToContent = () => {
+    playScrollSound();
     gsap.to(window, {
       duration: 1,
       scrollTo: { y: '#love-letter', offsetY: 50 },
@@ -94,17 +98,17 @@ export default function Hero() {
       <div className="hero-tape absolute top-8 left-8 w-24 h-5 washi-green origin-left" style={{ transform: 'rotate(3deg)' }} />
       
       {/* Top right - stickers */}
-      <div className="hero-decoration absolute top-16 right-16 text-4xl">
+      <div className="hero-decoration absolute top-16 right-6 text-4xl">
         <div className='w-15 h-15 relative'>
           <Image className="animate-wobble" src="/duck1.png" alt='miffy1' fill />
         </div>
       </div>
-      <div className="hero-decoration absolute top-28 right-28 text-3xl">
+      <div className="hero-decoration absolute top-24 right-19 text-3xl">
         <div className='w-9 h-9 relative rotate-y-180'>
           <Image className="animate-wobble" src="/cherry-blossom.png" alt='miffy1' fill />
         </div>
       </div>
-      <div className="hero-decoration absolute top-14 right-33 text-2xl animate-sparkle">
+      <div className="hero-decoration absolute top-13 right-19 text-2xl animate-sparkle">
          <div className='w-10 h-10 relative rotate-y-180 opacity-75'>
           <Image className="animate-wobble" src="/moon1.png" alt='miffy1' fill />
         </div>
@@ -141,7 +145,7 @@ export default function Hero() {
       <div className="hero-tape absolute bottom-0 right-16 w-28 h-5 washi-yellow origin-right" style={{ transform: 'rotate(4deg)' }} />
       
       {/* Floating elements */}
-      <div className="hero-decoration absolute top-1/4 left-8 text-2xl animate-float z-99999">
+      <div className="hero-decoration absolute top-1/4 left-8 text-2xl animate-float z-99">
         <div className='w-14 h-14 relative rotate-y-180 opacity-75 '>
           <Image className="animate-wobble" src="/plant1.png" alt='plant icon' fill />
         </div>      
@@ -191,7 +195,7 @@ export default function Hero() {
             className="hero-title heading-display mb-4"
             style={{ fontFamily: 'Georgia, serif' }}
           >
-            To: Dep Gai
+            My Dep Gai
           </h1>
           
           {/* Doodle underline */}
@@ -201,7 +205,7 @@ export default function Hero() {
             className="hero-subtitle mb-6"
             style={{ color: 'var(--muted)', fontSize: '1rem' }}
           >
-            I made a little something for you...
+            And all the lovely little things about her..
           </p>
 
           {/* Decorative stamp */}
@@ -213,7 +217,9 @@ export default function Hero() {
         {/* CTA Button */}
         <button 
           onClick={scrollToContent}
+          onTouchEnd={(e) => { e.preventDefault(); scrollToContent(); }}
           className="hero-cta btn btn-lg btn-primary mt-8"
+          style={{ touchAction: 'manipulation' }}
         >
           Scroll down!
         </button>

@@ -24,6 +24,11 @@ export default function MusicPlayer({
   const spinAnimation = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
+    // Set volume to be quieter
+    if (audioRef.current) {
+      audioRef.current.volume = 0.4;
+    }
+
     // Entrance animation
     gsap.from(containerRef.current, {
       duration: 0.8,
@@ -91,7 +96,7 @@ export default function MusicPlayer({
       
       <div 
         ref={containerRef}
-        className="fixed bottom-6 right-6 z-50"
+        className="fixed bottom-6 right-6 z-999999"
       >
         {/* Tooltip
         <div 
@@ -158,8 +163,17 @@ export default function MusicPlayer({
 
           {/* Play/Pause overlay */}
           <div className="absolute inset-0 rounded-full flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-            <div className={`text-white text-2xl transition-all duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
-              {isPlaying ? '⏸' : '▶'}
+            <div className={`text-white transition-all duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+              {isPlaying ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
             </div>
           </div>
 

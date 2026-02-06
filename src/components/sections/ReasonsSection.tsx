@@ -2,16 +2,34 @@
 
 import { Section } from '@/components';
 import Image from 'next/image';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { ReasonItem } from '@/data/reasons';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useSounds } from '@/hooks/useSounds';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ReasonsSection({ reasons }: { reasons: ReasonItem[] }) {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const hasPlayedSounds = useRef(false);
+  const hasPlayedTransition = useRef(false);
+  const { playPolaroidSound, playTapeSound, playPaperSlideSound } = useSounds();
+
+  // Memoize the sound player to avoid recreating on each render
+  const playSoundsForCards = useCallback((cardCount: number) => {
+    if (hasPlayedSounds.current) return;
+    hasPlayedSounds.current = true;
+    
+    // Play polaroid sounds staggered for first 3 cards
+    const soundCount = Math.min(cardCount, 3);
+    for (let i = 0; i < soundCount; i++) {
+      setTimeout(() => playPolaroidSound(), i * 150 + 100);
+    }
+    // Play a tape sound at the end
+    setTimeout(() => playTapeSound(), soundCount * 150 + 300);
+  }, [playPolaroidSound, playTapeSound]);
 
   useEffect(() => {
     const cards = cardsRef.current.filter(Boolean);
@@ -33,6 +51,13 @@ export default function ReasonsSection({ reasons }: { reasons: ReasonItem[] }) {
           trigger: sectionRef.current,
           start: 'top 80%',
           toggleActions: 'play none none none',
+          onEnter: () => {
+            if (!hasPlayedTransition.current) {
+              hasPlayedTransition.current = true;
+              playPaperSlideSound();
+            }
+            playSoundsForCards(cards.length);
+          },
         },
         delay: idx * 0.15, // Stagger each card
       });
@@ -79,7 +104,7 @@ export default function ReasonsSection({ reasons }: { reasons: ReasonItem[] }) {
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
-  }, [reasons]);
+  }, [reasons, playSoundsForCards, playPaperSlideSound]);
 
   return (
     <Section 
@@ -115,7 +140,7 @@ export default function ReasonsSection({ reasons }: { reasons: ReasonItem[] }) {
         <div className="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4" style={{ borderColor: 'var(--kraft)' }} />
         <div className="absolute top-4 right-4 w-12 h-12 border-t-4 border-r-4" style={{ borderColor: 'var(--kraft)' }} />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 p-3">
           {reasons.map((reason, idx) => (
             <div 
               key={idx}

@@ -19,6 +19,7 @@ export default function ValentineSection() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
+
       // Animate each letter of the title with stagger
       titleCharsRef.current.forEach((char, i) => {
         if (!char) return;
@@ -102,7 +103,7 @@ export default function ValentineSection() {
         
          {/* Decorative doodles */}
         <div className="absolute bottom-[12%] left-[5%] text-[8vw] md:text-[4vw] animate-wobble z-9999">🦆</div>
-        <div className="absolute top-20 md:top-7 left-[2%] text-[6vw] md:text-[3vw] animate-float">🌸</div>
+        <div className="absolute top-17 md:top-7 left-[2%] text-[6vw] md:text-[3vw] animate-float">🌸</div>
         <div className="absolute top-[60%] right-[3%] text-[7vw] md:text-[3.5vw] animate-float" style={{ animationDelay: '0.5s' }}>✨</div>
         
         {/* Kraft paper texture overlay */}
@@ -163,7 +164,7 @@ export default function ValentineSection() {
         {/* BIG BOLD LEFT-ALIGNED TITLE */}
         <div className="relative z-[1] pt-[12vh] px-4 md:px-8">
           <p 
-            className="font-simple-nathalie text-[7vw] md:text-[3vw] mb-2"
+            className="font-simple-nathalie text-[8vw] md:text-[3vw]"
             style={{ color: 'var(--primary-dark)', opacity: 0.7 }}
           >
             so katie...

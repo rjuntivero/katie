@@ -181,7 +181,7 @@ export default function Navbar({ items }: NavbarProps) {
   return (
     <nav
       ref={navRef}
-      className="fixed left-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-start gap-3 py-4"
+      className="fixed left-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-start gap-3 py-4 z-999999"
     >
       {/* Cute toggle button - always visible */}
       <button
@@ -229,7 +229,7 @@ export default function Navbar({ items }: NavbarProps) {
               </button>
               
               {/* Label - only show for active */}
-              {isActive && (
+              {/* {isActive && (
                 <div
                   ref={labelRef}
                   className="text-xs font-bold uppercase tracking-wide whitespace-nowrap px-3 py-1.5"
@@ -242,7 +242,7 @@ export default function Navbar({ items }: NavbarProps) {
                 >
                   {item.label}
                 </div>
-              )}
+              )} */}
             </div>
           );
         })}

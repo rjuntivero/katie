@@ -5,12 +5,15 @@ import { MiffyBunny } from '@/components';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import React, { useEffect, useRef } from 'react';
+import { useSounds } from '@/hooks/useSounds';
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function LoveLetterSection() {
   const cardRef = useRef<HTMLDivElement>(null);
+  const hasPlayedSound = useRef(false);
+  const { playPaperSlideSound, playTapeSound } = useSounds();
 
   useEffect(() => {
     const card = cardRef.current;
@@ -38,6 +41,14 @@ export default function LoveLetterSection() {
         start: 'top 80%',
         end: 'bottom 20%',
         toggleActions: 'play none none reverse',
+        onEnter: () => {
+          if (!hasPlayedSound.current) {
+            hasPlayedSound.current = true;
+            playPaperSlideSound();
+            // Play tape sound shortly after paper lands
+            setTimeout(() => playTapeSound(), 400);
+          }
+        },
       }
     });
 
@@ -45,7 +56,7 @@ export default function LoveLetterSection() {
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [playPaperSlideSound, playTapeSound]);
   return (
     <Section 
       id="love-letter" 
@@ -55,10 +66,10 @@ export default function LoveLetterSection() {
       style={{ background: 'var(--surface)' }}
     >
       {/* Scrapbook decorations */}
-      <div className="absolute top-8 left-8 text-3xl animate-wobble">📚</div>
-      <div className="absolute top-12 right-12 text-3xl animate-float">🦆</div>
-      <div className="absolute bottom-20 left-16 text-2xl">🍦</div>
-      <div className="absolute bottom-16 right-20 text-3xl animate-float" style={{ animationDelay: '0.5s' }}>🌸</div>
+      {/* <div className="absolute top-8 left-8 text-3xl animate-wobble">📚</div>
+      <div className="absolute top-12 right-12 text-3xl animate-float">🦆</div> */}
+      {/* <div className="absolute bottom-20 left-16 text-2xl">🍦</div>
+      <div className="absolute bottom-16 right-20 text-3xl animate-float" style={{ animationDelay: '0.5s' }}>🌸</div> */}
 
       <div className="max-w-2xl mx-auto relative z-10" ref={cardRef}>
               

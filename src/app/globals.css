@@ -532,16 +532,18 @@ body {
 }
 
 .text-handwritten {
-  font-family: 'Brush Script MT', 'Segoe Script', cursive;
-  /* Fluid size: smaller on phones, scales up on large screens */
-  font-size: clamp(1rem, 2.4vw, 1.25rem);
-  line-height: 1.5;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-style: italic;
+  /* Fluid size: readable on phones, scales up on large screens */
+  font-size: clamp(1.125rem, 3vw, 1.35rem);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
 }
 
 /* Optional fluid body text utility for longer notes */
 .text-fluid {
-  font-size: clamp(0.95rem, 2.2vw, 1.125rem);
-  line-height: 1.7;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  line-height: 1.75;
 }
 
 /* ========== CUSTOM FONT UTILITIES ========== */

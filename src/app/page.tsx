@@ -6,6 +6,7 @@ import {
   MusicPlayer
 } from '@/components';
 import { BunnyOnBike } from '@/components/ScrapbookElements';
+import SoundInitializer from '@/components/SoundInitializer';
 import LoveLetterSection from '@/components/sections/LoveLetterSection';
 import ReasonsSection from '@/components/sections/ReasonsSection';
 import MemoriesSection from '@/components/sections/MemoriesSection';
@@ -17,12 +18,14 @@ import { reasonsILoveKatie } from '@/data/reasons';
 import { photoGridImages } from '@/data/photoGridImages';
 
 export default function Home() {
-
   return (
     <div 
       className="min-h-screen overflow-x-hidden"
       style={{ background: 'var(--background)' }}
     >
+      {/* Initialize sounds on mount */}
+      <SoundInitializer />
+
       {/* Background music player - vinyl style */}
       <MusicPlayer 
         src="/song.mp3"
